@@ -9,4 +9,4 @@ Causeway is an interactive poetry app and performance written by Vincent Cellucc
 - [ ] incorporate finger movements on client screen to reveal blurry text
 - [ ] holds on client screen make text grow and get shot off to the theater view
 - [ ] create blended semi-opaque motion trails on theater view based off of client movements
-~~  - [ ] these only become revealed when client finger is released ~~
+  - [ ] ~~these only become revealed when client finger is released~~
