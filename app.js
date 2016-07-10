@@ -1,7 +1,7 @@
 // ************************************************
 
 // NEXUS Node Server
-//				Jesse Allison (2015)
+//				Jesse Allison (2016)
 //
 //	To Launch:
 //		NODE_ENV=production sudo node nexus-server.js
@@ -11,48 +11,50 @@
 
 
 	// Setup web app - using express to serve pages
-var express = require('express'),
-		sio = require('socket.io'),
-		http = require('http');
+	var express = require('express'),
+			sio = require('socket.io'),
+			http = require('http');
 
-var app = express();
+	var serverPort = 8000;
+
+	var app = express();
 
 app.use(express.static(__dirname + '/app'));
 
-	//	OSC Setup for sending (and receiving) OSC (to Max)
-var osc = require('node-osc');
-		// oscServer is used for receiving osc messages (from Max)
-var oscServer = new osc.Server(7746, '167.96.127.8');
-oscServer.on("message", function (msg, rinfo) {
-			// console.log("OSC message:");
-			// console.log(msg);
-					// Setup messages to receive here //
-	if(msg[0] = "/goToSection") {
-		currentSection = msg[1];
-		shareSection(currentSection);
-	}
-});
-
-		// oscClient is used to send osc messages (to Max)
-var oscClient = new osc.Client('167.96.127.8', 7745);
-
-
 	// server is the node server (web app via express)
-		// this code launches the server on port 80 and switches the user id away from sudo
+		// this code can launch the server on port 80 and switch the user id away from sudo
 		// apparently this makes it more secure - if something goes awry it isn't running under the superuser.
 var server = http.createServer(app)
-	.listen(8000, function(err) {
+	.listen(serverPort, function(err) {
 		if (err) return cb(err);
 
-		// Find out which user used sudo through the environment variable
-		var uid = parseInt(process.env.SUDO_UID);
-		// Set our server's uid to that user
-		if (uid) process.setuid(uid);
+		var uid = parseInt(process.env.SUDO_UID);	// Find out which user used sudo through the environment variable
+		if (uid) process.setuid(uid);			// Set our server's uid to that user
 		console.log('Server\'s UID is now ' + process.getuid());
 	});
 
-		// start socket.io listening on the server
+	// start socket.io listening on the server
 var io = sio.listen(server);
+
+
+	//***	OSC Setup for sending (and receiving) OSC (to Max) ***//
+
+		// var osc = require('node-osc');
+				// oscServer is used for receiving osc messages (from Max)
+		// var oscServer = new osc.Server(7746, '167.96.127.8');
+		// oscServer.on("message", function (msg, rinfo) {
+		// 			// console.log("OSC message:");
+		// 			// console.log(msg);
+		// 					// Setup messages to receive here //
+		// 	if(msg[0] = "/goToSection") {
+		// 		currentSection = msg[1];
+		// 		shareSection(currentSection);
+		// 	}
+		// });
+
+				//***  oscClient is used to send osc messages (to Max) ***//
+		// var oscClient = new osc.Client('167.96.127.8', 7745);
+
 
 
 // *********************
@@ -60,10 +62,14 @@ var io = sio.listen(server);
 
 var ioClients = [];		// list of clients who have logged in.
 var currentSection = 0;		// current section.
-var theaterID;
-var conrollerID;
+		// Specific clients who we only want one of.
+var theaterID,			
+		conrollerID,
+		audioControllerID;
 
 // *********************
+
+
 
 	// Respond to web sockets with socket.on
 io.sockets.on('connection', function (socket) {
@@ -84,6 +90,11 @@ io.sockets.on('connection', function (socket) {
 			controllerID = socket.id;
 			console.log("Hello Controller: " + controllerID);
 		}
+		
+		if(username == "audio_controller"){
+			audioControllerID = socket.id;
+			console.log("Hello Audio Controller: " + audioControllerID);
+		}
 
 		if(username == "a_user") {
 			ioClients.push(socket.id);
@@ -102,13 +113,17 @@ io.sockets.on('connection', function (socket) {
 		var title = getSection(currentSection);
 		
 		if(username == "a_user") {
-			console.log("Hello:", socket.username, "currentSection:", currentSection, "id:", socket.id, "userColor:", socket.userColor, "userLocation:", socket.userLocation, "userNote:", socket.userNote);
+			//console.log("Hello:", socket.username, "currentSection:", currentSection, "id:", socket.id, "userColor:", socket.userColor, "userLocation:", socket.userLocation, "userNote:", socket.userNote);
 		}
 
 		socket.emit('setSection', {sect: currentSection, title: title});
 		// io.sockets.emit('setSection', {sect: sect, title: title});
 		if(username == "a_user") {
-			oscClient.send('/causeway/registerUser', socket.id, socket.userColor, socket.userLocation[0],socket.userLocation[1], socket.userNote);
+			// oscClient.send('/causeway/registerUser', socket.id, socket.userColor, socket.userLocation[0],socket.userLocation[1], socket.userNote);
+			if(audioControllerID) {
+					io.to(audioControllerID).emit('/causeway/registerUser', {id: socket.id, color: socket.userColor, locationX: socket.userLocation[0], locationY: socket.userLocation[1], note: socket.userNote}, 1);
+				// console.log("Added New User", {id: socket.id, color: socket.userColor, locationX: socket.userLocation[0], locationY: socket.userLocation[1], note: socket.userNote});
+	    }
 		}
 	});
 
@@ -123,8 +138,8 @@ io.sockets.on('connection', function (socket) {
 	 });
 
 	socket.on('tap', function(data) {
-		console.log("Data: ", data.inspect);
-		oscClient.send('/tapped', 1);
+		// console.log("Data: ", data.inspect);
+		// oscClient.send('/tapped', 1);
 		socket.broadcast.emit('tapped', socket.username, 1);
 	});
 
@@ -134,7 +149,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('location', function(data) {
 		if(data) {
-			oscClient.send('/location', data[0], data[1]);
+			// oscClient.send('/location', data[0], data[1]);
 		}
 	});
 
@@ -143,44 +158,27 @@ io.sockets.on('connection', function (socket) {
 		// TODO: Take out all the socket.broadcast.emits.
 		// socket.broadcast.emit('chat', socket.id + " : " + data, 1);
 
-	    if(io.sockets.connected[theaterID]!== null) {
-	        io.sockets.connected[theaterID].emit('itemback', {phrase: data, color: socket.userColor}, 1);
-	    }
-		// socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
-		oscClient.send('/causeway/phrase/number', socket.id, data);
+		if(theaterID) {
+			// io.to(theaterID).emit('itemback', {phrase: data, color: socket.userColor}, 1);
+			io.sockets.emit('itemback', {phrase: data, color: socket.userColor}, 1);
+	   }
+		if(audioControllerID) {
+			io.to(audioControllerID).emit('/causeway/phrase/number', {id: socket.id, item: data}, 1);
+				// console.log("Item", data);
+	  }
 	});
 
 	socket.on('triggerCauseway', function(data) {
-		oscClient.send('/causeway/triggerCauseway', socket.id);
+		if(audioControllerID) {
+				io.to(audioControllerID).emit('/causeway/triggerCauseway', {id: socket.id}, 1);
+    }
 	});
 
 	socket.on('triggerPitch', function(data) {
-		oscClient.send('/causeway/triggerPitch', socket.id);
+		if(audioControllerID) {
+        io.to(audioControllerID).emit('/causeway/triggerPitch', {id: socket.id}, 1);
+    }
 	});
-
-	socket.on('slider', function(data) {
-		console.log("slider! " + data);
-
-		oscClient.send('/slider', socket.username, data);
-	});
-
-
-	// Return random user name
-	socket.on('getSomebody', function(data) {
-		console.log("Get Somebody! ");
-
-		var user = getNextUser();
-					// Make sure you don't get yourself
-		if(user.username == socket.username || user.username == null) {
-			user = getNextUser();
-			if(user.username == socket.username || user.username == null) {
-				socket.emit("somebodyToYou","Somebody");
-			}
-		} else {
-			socket.emit("somebodyToYou",user.username);
-		}
-	});
-
 
 	socket.on('section', function(data) {
 		console.log("Section is now: "+ data);
@@ -205,9 +203,10 @@ io.sockets.on('connection', function (socket) {
 	sendSection = function (sect) {
 		var title = getSection(sect);
 		io.sockets.emit('setSection', {sect: sect, title: title});
-		// oscClient.send('/setSection', sect, title);
-		oscClient.send('/causeway/currentSection', sect);
-
+		if(audioControllerID) {
+				io.to(audioControllerID).emit('/causeway/currentSection', {section: sect, title: title}, 1);
+				// console.log("Section sent", sect);
+    }
 	};
 
 		// Section shared from Max to UIs
