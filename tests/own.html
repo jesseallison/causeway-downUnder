@@ -1,12 +1,41 @@
 <!doctype html>
 <html>
 
+<head>
+  <title>asdf</title>
+  <style>
+    a:hover,
+    a:active {
+      /*-webkit-tap-highlight-color: rgba(255, 0, 0, 0.5);
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;*/
+    }
+  </style>
+  <!-- set viewport -->
+  <script>
+    var meta = document.createElement("meta");
+    meta.setAttribute('name', 'viewport');
+    meta.setAttribute('content', 'initial-scale=' + (1 / window.devicePixelRatio) + ',user-scalable=no');
+    document.getElementsByTagName('head')[0].appendChild(meta);
+  </script>
+</head>
+
 <body onload="startup()">
 
+  <a href="#">here</a>
+
   <script type="text/javascript">
+    // var pa = document.getElementsByTagName('a')[0];
+    //
+    // pa.onclick = function() {
+    //   // Trigger the `hover` event on the paragraph
+    //   pa.onhover.call(pa);
+    // };
+
+
     function startup() {
       var el = document.getElementsByTagName("html")[0];
-      el.addEventListener("touchstart", handleStart, false);
+      el.addEventListener("touchstart", handleStart, true);
       el.addEventListener("touchend", handleEnd, false);
       el.addEventListener("touchcancel", handleCancel, false);
       el.addEventListener("touchmove", handleMove, false);
@@ -17,7 +46,7 @@
     var ongoingTouches = [];
 
     function handleStart(evt) {
-      // evt.preventDefault();
+      evt.preventDefault();
       // console.log("touchstart.");
       var touches = evt.changedTouches;
 
@@ -47,7 +76,7 @@
     }
 
     function handleEnd(evt) {
-      // evt.preventDefault();
+      evt.preventDefault();
       console.log("touchend");
       var touches = evt.changedTouches;
 
@@ -92,7 +121,7 @@
     }
   </script>
 
-  <a style="hover{color:red}" href="#">here</a>
+
 
 </body>
 
