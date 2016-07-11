@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Tizen Web IDE - Tizen - Tizen basic Application</title>
+  <style>
+    body {
+      background-color: red;
+      /*: url(images/tizen_blackfold3.png) no-repeat;*/
+      background-size: cover;
+    }
+
+    #canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <p>
+    sadoifhj asjldfhlasdjkfh lkasjdfh lkjasdfhlkasjdfhlaksdjfh lkajsdfh alskdjfh asldkjfh aslkdjfh klajsdh klajsdhflkajsdf lkasd lkasdjh ljkasdfh akljsdfh aklsdjfh laksdjfh aslkjdfh alskdjfh alksdjfh alskdjfh alskdjfh aslkdjfh asdlkjfh asdkljfh asdlkjfh asdlkjfh
+    asdlkjfh asdlkjfh asldkjfh asdkljfh asdlkjfh asdlkjfh asdlkjfh adslkjfh adslkjfh adslkjfh asdlkjfh asdlkjfh asdlkjfh alsdkjfh alskdjfh alskdjfh alksjdfh sakldjfh asdlkjfh asdlkjh flkjasdhf
+  </p>
+  <canvas id="canvas" width="600" height="300"></canvas>
+  <!-- <input type="button" value="Small brush" id="smallBrush">
+  <input type="button" value="Big brush" id="bigBrush"> -->
+  <script type="text/javascript">
+    var lastX = 0,
+      lastY = 0,
+      mouseBtn = false,
+      brushSize = 15;
+    var canvas, context;
+
+    function updateLastPos(e) {
+      if (e.type.indexOf('touch') >= 0) {
+        var pos = e.touches.item(0);
+        lastX = pos.clientX - pos.target.offsetLeft;
+        lastY = pos.clientY - pos.target.offsetTop;
+      } else {
+        lastX = e.offsetX;
+        lastY = e.offsetY;
+      }
+    }
+
+    function startDraw(e) {
+      updateLastPos(e);
+      context.globalCompositeOperation = 'destination-out';
+      context.beginPath();
+      context.moveTo(lastX, lastY);
+      mouseBtn = true;
+    }
+
+    function drawStep(e) {
+      if (mouseBtn) {
+        updateLastPos(e);
+        context.lineTo(lastX, lastY);
+        context.stroke();
+      }
+    }
+
+    function stopDraw(e) {
+      context.globalCompositeOperation = 'source-over';
+      mouseBtn = false;
+    }
+
+    // function smallBrush(e) {
+    //   context.beginPath();
+    //   brushSize = 4;
+    //   context.lineWidth = brushSize;
+    // }
+
+    // function brush(e) {
+    //   context.beginPath();
+    //   brushSize = 12;
+    //   context.lineWidth = brushSize;
+    // }
+
+    window.onload = function() {
+      canvas = document.getElementById('canvas');
+      context = canvas.getContext("2d");
+      if (!context) {
+        return;
+      }
+      var img = new Image();
+      img.addEventListener('load', function() {
+        context.drawImage(img, 0, 0);
+      });
+      img.src = "australia.jpg";
+      context.lineWidth = brushSize;
+      context.lineCap = 'round';
+
+      // var smallBtn = document.getElementById("smallBrush");
+      // smallBtn.addEventListener('click', smallBrush);
+      // var bigBtn = document.getElementById("bigBrush");
+      // bigBtn.addEventListener('click', bigBrush);
+
+      canvas.addEventListener('touchstart', startDraw);
+      canvas.addEventListener('touchmove', drawStep);
+      canvas.addEventListener('touchend', stopDraw);
+
+      canvas.addEventListener('mouseout', stopDraw);
+
+      canvas.addEventListener('mousedown', startDraw);
+      canvas.addEventListener('mousemove', drawStep);
+      canvas.addEventListener('mouseup', stopDraw);
+
+
+    }
+  </script>
+</body>
+
+</html>

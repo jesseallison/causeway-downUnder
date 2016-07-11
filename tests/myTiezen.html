@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>brushMask</title>
+  <style>
+    body {
+      background-color: red;
+      background: url(australia.jpg) repeat;
+      /*background-size: cover;*/
+    }
+
+    #canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    /*body::after {
+      background-image: url('australia.jpg');
+      filter: url('#blur');
+      filter: blur(5px);
+    }*/
+
+    #search-bg {
+      /* Absolutely position it, but stretch it to all four corners, then put it just behind #search's z-index */
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      z-index: 99;
+      /* Pull the background 70px higher to the same place as #bg's */
+      background-position: center -70px;
+      -webkit-filter: blur(10px);
+      filter: url('blur.svg#blur');
+      filter: blur(10px);
+    }
+
+    svg {
+      z-index: 1000;
+    }
+  </style>
+</head>
+
+<body>
+
+  <svg width="100%" viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <defs>
+      <filter id="blur">
+        <feGaussianBlur stdDeviation="5" />
+      </filter>
+    </defs>
+  </svg>
+
+
+
+
+  <p>
+    sadoifhj asjldfhlasdjkfh lkasjdfh lkjasdfhlkasjdfhlaksdjfh lkajsdfh alskdjfh asldkjfh aslkdjfh klajsdh klajsdhflkajsdf lkasd lkasdjh ljkasdfh akljsdfh aklsdjfh laksdjfh aslkjdfh alskdjfh alksdjfh alskdjfh alskdjfh aslkdjfh asdlkjfh asdkljfh asdlkjfh asdlkjfh
+    asdlkjfh asdlkjfh asldkjfh asdkljfh asdlkjfh asdlkjfh asdlkjfh adslkjfh adslkjfh adslkjfh asdlkjfh asdlkjfh asdlkjfh alsdkjfh alskdjfh alskdjfh alksjdfh sakldjfh asdlkjfh asdlkjh flkjasdhf
+  </p>
+  <canvas id="canvas" width="600" height="300"></canvas>
+
+  <div id="search-bg">hi</div>
+
+  <script type="text/javascript">
+    var lastX = 0,
+      lastY = 0,
+      mouseBtn = false,
+      brushSize = 15;
+    var canvas, context;
+
+    function updateLastPos(e) {
+      if (e.type.indexOf('touch') >= 0) {
+        var pos = e.touches.item(0);
+        lastX = pos.clientX - pos.target.offsetLeft;
+        lastY = pos.clientY - pos.target.offsetTop;
+      } else {
+        lastX = e.offsetX;
+        lastY = e.offsetY;
+      }
+    }
+
+    function startDraw(e) {
+      updateLastPos(e);
+      context.globalCompositeOperation = 'destination-out';
+      context.beginPath();
+      context.moveTo(lastX, lastY);
+      mouseBtn = true;
+    }
+
+    function drawStep(e) {
+      if (mouseBtn) {
+        updateLastPos(e);
+        context.lineTo(lastX, lastY);
+        context.stroke();
+      }
+    }
+
+    function stopDraw(e) {
+      context.globalCompositeOperation = 'source-over';
+      mouseBtn = false;
+    }
+
+    window.onload = function() {
+      canvas = document.getElementById('canvas');
+      context = canvas.getContext("2d");
+
+      if (!context) {
+        return;
+      }
+
+      var img = new Image();
+      img.addEventListener('load', function() {
+        context.drawImage(img, 0, 0);
+      });
+
+      img.src = "australia.jpg";
+      context.lineWidth = brushSize;
+      context.lineCap = 'round';
+
+      canvas.addEventListener('touchstart', startDraw);
+      canvas.addEventListener('touchmove', drawStep);
+      canvas.addEventListener('touchend', stopDraw);
+      canvas.addEventListener('mouseout', stopDraw);
+      canvas.addEventListener('mousedown', startDraw);
+      canvas.addEventListener('mousemove', drawStep);
+      canvas.addEventListener('mouseup', stopDraw);
+
+    };
+  </script>
+</body>
+
+</html>

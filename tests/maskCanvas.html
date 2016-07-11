@@ -12,7 +12,11 @@
     aisoudfh sajdkfh askljdfh aisdufh asidufh asidufh sadjfh aklsjdfh lksajdfh asdufh
   </p>
 
-  <canvas style="-webkit-mask:url('star.svg')" id="canvas" width="600" height="600" style="border:solid black 1px;">
+  <canvas id="canvas" width="600" height="600" style="-webkit-mask:'#canvas2'; border:solid black 1px;">
+    Your browser does not support canvas element.
+  </canvas>
+
+  <canvas id="canvas2" width="600" height="600" style="border:solid black 1px;">
     Your browser does not support canvas element.
   </canvas>
 
@@ -21,8 +25,9 @@
     startup();
 
     function main() {
-      var offscreenCanvas = document.createElement('canvas');
-      // var offscreenCanvas = document.getElementsByTagName("canvas")[0];
+      // var offscreenCanvas = document.createElement('canvas');
+      // offscreenCanvas.id = "maskcan";
+      var offscreenCanvas = document.getElementById("canvas2");
       offscreenCanvas.width = 300;
       offscreenCanvas.height = 300;
       var ctx2 = offscreenCanvas.getContext('2d');
