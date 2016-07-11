@@ -8,8 +8,6 @@
   <style>
     body {
       background-color: red;
-      /*background: url(australia.jpg) repeat;*/
-      /*background-size: cover;*/
     }
 
     .unselectable {
@@ -80,6 +78,8 @@
     window.onload = function() {
       canvas = document.getElementById('canvas');
       context = canvas.getContext("2d");
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
 
       if (!context) {
         return;
@@ -102,7 +102,20 @@
       canvas.addEventListener('mousemove', drawStep);
       canvas.addEventListener('mouseup', stopDraw);
 
+      window.addEventListener('resize', resizeCanvas, false);
+      resizeCanvas();
+
     };
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      drawStuff();
+    }
+
+    function drawStuff() {
+      // do your drawing stuff here
+    }
   </script>
 </body>
 
