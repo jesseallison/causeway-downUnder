@@ -4,7 +4,7 @@
 //				Jesse Allison (2016)
 //
 //	To Launch:
-//		NODE_ENV=production sudo node nexus-server.js
+//		NODE_ENV=production sudo node appCluster.js 
 //		(sudo is required to launch on port 80.)
 // 
 // To start server with Xtra RAM - NODE_DEBUG=cluster node --max_old_space_size=4096 appCluster.js
