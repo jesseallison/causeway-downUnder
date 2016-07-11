@@ -3,7 +3,6 @@
 
 <head>
   <title>maskcan</title>
-  <script src="touchHandling.js"></script>
 </head>
 
 <body>
@@ -13,23 +12,23 @@
     aisoudfh sajdkfh askljdfh aisdufh asidufh asidufh sadjfh aklsjdfh lksajdfh asdufh
   </p>
 
-  <canvas id="canvas" width="600" height="600" style="border:solid black 1px;">
+  <canvas style="-webkit-mask:url('star.svg')" id="canvas" width="600" height="600" style="border:solid black 1px;">
     Your browser does not support canvas element.
   </canvas>
 
-  <script type="application/javascript">
+  <script>
+    main();
+    startup();
+
     function main() {
       var offscreenCanvas = document.createElement('canvas');
-      offscreenCanvas.width = 300 px;
-      offscreenCanvas.height = 300 px;
+      // var offscreenCanvas = document.getElementsByTagName("canvas")[0];
+      offscreenCanvas.width = 300;
+      offscreenCanvas.height = 300;
       var ctx2 = offscreenCanvas.getContext('2d');
-
-      context.fillRect(10, 10, 290, 290);
-
+      ctx2.fillRect(10, 10, 280, 280);
     }
-  </script>
 
-  <script type="text/javascript">
     function startup() {
       var el = document.getElementsByTagName("canvas")[0];
       el.addEventListener("touchstart", handleStart, false);
