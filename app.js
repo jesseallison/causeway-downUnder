@@ -15,7 +15,7 @@
 			sio = require('socket.io'),
 			http = require('http');
 
-	var serverPort = 8000;
+	var serverPort = 80;
 
 	var app = express();
 
