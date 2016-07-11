@@ -19,7 +19,7 @@
 
 	var app = express();
 
-app.use(express.static(__dirname + '/app'));
+app.use(express.static(__dirname + '/public'));
 
 	// server is the node server (web app via express)
 		// this code can launch the server on port 80 and switch the user id away from sudo

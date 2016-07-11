@@ -49,9 +49,7 @@
 		<div id="causeway-text"></div>
 
 		<script>
-			// var socket = io.connect('130.39.21.88/');
 			var socket = io.connect(window.location.origin , {transports:['websocket']} );
-			//var socket = io.connect('https://atlab.cct.lsu.edu/', { path: '/causeway/socket.io' });
 			var myColor = getRandomColor();
 			var myLocation = [0.5, 0.5];	// Default centered
 			

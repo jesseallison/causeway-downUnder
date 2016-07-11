@@ -26,12 +26,12 @@ var sio = require('socket.io');
 var redis = require('redis');
 var redisAdapter = require('socket.io-redis');
 
-var serverPort = process.env.PORT || 8000;
+var serverPort = process.env.PORT || 80;
 var workers = process.env.WORKERS || workerNumber;
 var redisUrl = process.env.REDISTOGO_URL || 'redis://127.0.0.1:6379';
 
 var app = express();
-app.use(express.static(__dirname + '/app'));
+app.use(express.static(__dirname + '/public'));
 
 	// server is the node server (web app via express)
 		// this code can launch the server on port 80 and switch the user id away from sudo
