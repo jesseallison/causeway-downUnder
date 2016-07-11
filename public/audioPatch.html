@@ -73,7 +73,7 @@
 	});
 	
 	socket.on('/causeway/registerUser', function(data) {
-		window.max.outlet('/causeway/registerUser'+ data.id+ data.color+ data.locationX+ data.locationY+ data.note);
+		window.max.outlet('/causeway/registerUser'+ " "+ data.id+" "+ data.color+" "+ data.locationX+" "+ data.locationY+" "+ data.note);
 	});
 	
 	socket.on('/causeway/triggerBBCollapse', function(data) {
