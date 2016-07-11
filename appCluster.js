@@ -173,6 +173,9 @@ if(cluster.isMaster) {
 			// ioClients.remove(socket.id);	// FIXME: Remove client if they leave
 			io.sockets.emit('chat', 'SERVER: ' + socket.id + ' has left the building');
 		 });
+		
+		
+		
 
 		 socket.on('sendchat', function(data) {
 			// Transmit to everyone who is connected //
@@ -215,6 +218,13 @@ if(cluster.isMaster) {
 					// console.log("Item", data);
 		  }
 		});
+		
+		socket.on('nextChord', function(data) {
+			if(audioControllerID) {
+					io.to(audioControllerID).emit('/causeway/nextChord', {id: socket.id}, 1);
+	    }
+			socket.broadcast.emit('triggerNextChord', data);
+		});
 
 		socket.on('triggerCauseway', function(data) {
 			if(audioControllerID) {
@@ -227,6 +237,63 @@ if(cluster.isMaster) {
 	        io.to(audioControllerID).emit('/causeway/triggerPitch', {id: socket.id}, 1);
 	    }
 		});
+		
+		socket.on('triggerBBCollapse', function(data) {
+			if(audioControllerID) {
+	        io.to(audioControllerID).emit('/causeway/triggerBBCollapse', {id: socket.id}, 1);
+	    }
+			socket.broadcast.emit('triggerBBCollapse', data);
+		});
+		
+		socket.on('triggerSmolder', function(data) {
+			if(audioControllerID) {
+	        io.to(audioControllerID).emit('/causeway/triggerSmolder', {id: socket.id}, 1);
+	    }
+			socket.broadcast.emit('triggerSmolder', data);
+		});
+		
+		socket.on('triggerWhoBrought', function(data) {
+			if(audioControllerID) {
+	        io.to(audioControllerID).emit('/causeway/triggerWhoBrought', {id: socket.id}, 1);
+	    }
+			socket.broadcast.emit('triggerWhoBrought', data);
+		});
+		
+		socket.on('triggerCollide', function(data) {
+			if(audioControllerID) {
+	        io.to(audioControllerID).emit('/causeway/triggerCollide', {id: socket.id}, 1);
+	    }
+			socket.broadcast.emit('triggerCollide', data);
+		});
+		
+		socket.on('triggerCricket', function(data) {
+			if(audioControllerID) {
+	        io.to(audioControllerID).emit('/causeway/triggerCricket', {id: socket.id}, 1);
+	    }
+			socket.broadcast.emit('triggerCricket', data);
+		});
+		
+		socket.on('triggerSequins', function(data) {
+			if(audioControllerID) {
+	        io.to(audioControllerID).emit('/causeway/triggerSequins', {id: socket.id}, 1);
+	    }
+			socket.broadcast.emit('triggerSequins', data);
+		});
+		
+		socket.on('triggerBreath', function(data) {
+			if(audioControllerID) {
+	        io.to(audioControllerID).emit('/causeway/triggerBreath', {id: socket.id}, 1);
+	    }
+			socket.broadcast.emit('triggerBreath', data);
+		});
+		
+		socket.on('triggerSonnet', function(data) {
+			if(audioControllerID) {
+	        io.to(audioControllerID).emit('/causeway/triggerSonnet', {id: socket.id}, 1);
+	    }
+			socket.broadcast.emit('triggerSonnet', data);
+		});
+		
 
 		socket.on('section', function(data) {
 			console.log("Section is now: "+ data);

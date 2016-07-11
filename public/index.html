@@ -167,6 +167,54 @@
 				return color;
 			}
 			
+			
+			socket.on('triggerBeginning', function(data) {
+				causeSound.playKepler();
+			});
+
+			socket.on('nextChord', function(data) {
+				causeSound.nextChord();
+			});
+			
+			socket.on('triggerBBCollapse', function(data) {
+				causeSound.playBBCollapse();
+			});
+			
+			socket.on('triggerSmolder', function(data) {
+				causeSound.playSmolder();
+			});
+			
+			socket.on('triggerWhoBrought', function(data) {
+				causeSound.playWhoBrought();
+			});
+			
+			socket.on('triggerCollide', function(data) {
+				causeSound.playCollide();
+			});
+			
+			socket.on('triggerCricket', function(data) {
+				causeSound.playCricket();
+			});
+			
+			socket.on('triggerSequins', function(data) {
+				causeSound.playSequins();
+			});
+			
+			socket.on('triggerBreath', function(data) {
+				causeSound.playBreath();
+			});
+			
+      socket.on('triggerSonnet', function(data) {
+				causeSound.playSonnet();
+			});
+
+			socket.on('triggerEnding', function(data) {
+				causeSound.playEnding();
+			});
+			
+			
+			
+			
 			var CauseSound = function () {
 				
 				this.sectionStartDict = {
@@ -210,7 +258,16 @@
 				this.sectionStarts = this.sectionStartDict[0];
 				
 				this.tone = new Tone();
-				this.synth = new Tone.SimpleSynth({
+				
+				this.tremolo = new Tone.Tremolo({
+					"frequency":8,
+					"type":"sine",
+					"depth":0.6,
+					"spread":0
+					//"wet": 0.8
+				}).toMaster().start();
+				
+				this.synth = new Tone.Synth({
 					"oscillator" : {
 						"type" : "sine"
 				 },
@@ -220,7 +277,7 @@
 					"sustain" : 0.8,
 					"release" : 2.0
 				 }
-				}).toMaster();
+				}).connect(this.tremolo);
 				
 				var plucky = new Tone.PluckSynth().toMaster();
 				plucky.volume.value = -6;
@@ -233,10 +290,24 @@
 				
 				this.seq.loop = 4;
 				
-				this.player = new Tone.Player("data/wavs/001-Causeway.wav").toMaster();
-				this.player2 = new Tone.Player("data/wavs/204-who%20had%20brought%20this%20one%20.wav").toMaster();
+				this.playerCauseway = new Tone.Player("data/mp3s/001-Causeway.mp3").toMaster();
 				this.playerSection = new Tone.Player("data/Causeway_Sections/causeway_section_audio_w.mp3").toMaster();
 				this.playerSection.retrigger = true;
+				
+				this.playerKepler = new Tone.Player("data/mp3s/Kepler_Star.mp3").toMaster();
+					this.playerKepler.retrigger = true;
+				this.playerEnding = new Tone.Player("data/mp3s/528-I am here.mp3").toMaster();
+				
+				
+				this.playerBBCollapse = new Tone.Player("data/mp3s/BBCollapse.mp3").toMaster();
+				this.playerSmolder = new Tone.Player("data/mp3s/Smolder.mp3").toMaster();
+				this.playerWhoBrought = new Tone.Player("data/mp3s/WhoBrought.mp3").toMaster();
+				this.playerCollide = new Tone.Player("data/mp3s/Collide.mp3").toMaster();
+				this.playerCricket = new Tone.Player("data/mp3s/Cricket.mp3").toMaster();
+				this.playerSequins = new Tone.Player("data/mp3s/Sequins.mp3").toMaster();
+				this.playerBreath = new Tone.Player("data/mp3s/Breath.mp3").toMaster();
+				this.playerSonnet = new Tone.Player("data/mp3s/Sonnet.mp3").toMaster();
+
 				
 				Tone.Transport.start();
 				
@@ -260,11 +331,11 @@
 				};
 				
 				this.playCauseway = function() {
-					this.player.start();
+					this.playerCauseway.start();
 				};
 
 				this.playBrought = function() {
-					this.player2.start();
+					this.playerWhoBrought.start();
 				};
 				
 				this.loadSection = function(section) {
@@ -286,7 +357,7 @@
 				
 				this.triggerCauseway = function() {
 					this.synth.triggerAttackRelease(this.pitch+12, 5);
-					this.player.start();
+					this.playerCauseway.start();
 					this.seqRandomize();
 					socket.emit('triggerCauseway', causeSound.pitch);
 					
@@ -294,6 +365,60 @@
 					// elements[0].className += " clicked";
 					elements[0].style.backgroundColor = myColor;
 				};
+				
+				// ****  Events **** 
+				
+				this.playBBCollapse = function () {
+					var pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
+					this.synth.triggerAttackRelease(pitch+12, 5);
+				};
+
+				this.playSmolder = function () {
+					var pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
+					this.synth.triggerAttackRelease(pitch+12, 5);
+				};
+
+				this.playWhoBrought = function () {
+					var pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
+					this.synth.triggerAttackRelease(pitch+12, 5);
+				};
+
+				this.playCollide = function () {
+					var pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
+					this.synth.triggerAttackRelease(pitch+12, 5);
+				};
+
+				this.playCricket = function () {
+					var pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
+					this.synth.triggerAttackRelease(pitch+12, 5);
+				};
+
+				this.playSequins = function () {
+					var pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
+					this.synth.triggerAttackRelease(pitch+12, 5);
+				};
+
+				this.playBreath = function () {
+					var pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
+					this.synth.triggerAttackRelease(pitch+12, 5);
+				};
+
+	      this.playSonnet = function () {
+					var pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
+					this.synth.triggerAttackRelease(pitch+12, 5);
+				};
+				
+				
+				this.playKepler = function() {
+					this.playerKepler.start();
+				};
+
+				this.playEnding = function() {
+					this.playerEnding.start();
+				};
+				
+				
+				
 				
 				// ****  Loop Seq
 				
