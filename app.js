@@ -63,7 +63,7 @@ var io = sio.listen(server);
 var ioClients = [];		// list of clients who have logged in.
 var currentSection = 0;		// current section.
 		// Specific clients who we only want one of.
-var theaterID,			
+var theaterID,
 		conrollerID,
 		audioControllerID;
 
@@ -90,7 +90,7 @@ io.sockets.on('connection', function (socket) {
 			controllerID = socket.id;
 			console.log("Hello Controller: " + controllerID);
 		}
-		
+
 		if(username == "audio_controller"){
 			audioControllerID = socket.id;
 			console.log("Hello Audio Controller: " + audioControllerID);
@@ -111,7 +111,7 @@ io.sockets.on('connection', function (socket) {
 		//socket.broadcast.emit('chat', 'SERVER: A new user has connected: ' + username + " " + socket.id + 'Color: ' + socket.userColor);
 		// socket.emit('bump', socket.username, "::dude::");
 		var title = getSection(currentSection);
-		
+
 		if(username == "a_user") {
 			//console.log("Hello:", socket.username, "currentSection:", currentSection, "id:", socket.id, "userColor:", socket.userColor, "userLocation:", socket.userLocation, "userNote:", socket.userNote);
 		}
@@ -190,12 +190,12 @@ io.sockets.on('connection', function (socket) {
 			// Functions for handling stuff
 
 			// **** SECTIONS ****
-	var sectionTitles = ["Welcome", "Preface", "Section 1", "Section 2", "Section 3", 
-		"Section 4", "Section 5", "Section 6", "Section 7", "Section 8", "Section 9", 
-		"Section 10", "Section 11", "Section 12", "Section 13", "Section 14", "Section 15",  
-		"Section 16", "Section 17", "Section 18", "Section 19", "Section 20", "Section 21", 
-		"Section 22", "Section 23", "Section 24", "Section 25", "Section 26", "Section 27", 
-		"Section 28", "Section 29", "Section 30", "Section 31", "Section 32", "Section 33", 
+	var sectionTitles = ["Welcome", "Preface", "Section 1", "Section 2", "Section 3",
+		"Section 4", "Section 5", "Section 6", "Section 7", "Section 8", "Section 9",
+		"Section 10", "Section 11", "Section 12", "Section 13", "Section 14", "Section 15",
+		"Section 16", "Section 17", "Section 18", "Section 19", "Section 20", "Section 21",
+		"Section 22", "Section 23", "Section 24", "Section 25", "Section 26", "Section 27",
+		"Section 28", "Section 29", "Section 30", "Section 31", "Section 32", "Section 33",
 		"End"];
 
 	// Todo: Add sections to correspond to organ interactions
@@ -217,20 +217,20 @@ io.sockets.on('connection', function (socket) {
 
 	getSection = function(sect) {
 		var title = "none";
-		
+
 		if(sect == 'w'){
 			title = sectionTitles[0];
-		} 
+		}
 
 		if(sect == 'e'){
 			title = sectionTitles[35];
-		} 
+		}
 
 		if(sect !== 'e' && sect !== 'w') {
 			sect++;
 			title = sectionTitles[sect];
-		} 
-		
+		}
+
 		return title;
 	};
 
@@ -264,4 +264,3 @@ function getRandomColor() {
 	}
 	return color;
 }
-
