@@ -403,6 +403,19 @@
 				this.currentChord = chord;
 			}
 			
+			this.nextChord = function() {
+				this.currentChord = this.currentChord + 1;
+				if(this.currentChord > this.chords.length){
+					this.currentChord = 0;
+				}
+			}
+			
+			this.randomChordNote = function(){
+				var chord = this.chords[Math.floor(Math.random() * (this.chords.length))];
+				var pitch = chord[Math.floor(Math.random() * (chord.length))];
+				return pitch;
+			}
+			
 //			this.arpeggio = function() {
 //				var pattern = causeSound.chords[causeSound.currentChord];
 //				var pat = new Tone.Pattern(function(time, note){
@@ -450,7 +463,8 @@
 
 			this.playBBCollapse = function() {
 				this.playerBBCollapse.start();
-				var pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
+				var pitch = this.randomChordNote();
+				console.log("Pitch: ", pitch);
 				this.synth.triggerAttackRelease(this.freq(pitch), 5);
 			};
 
