@@ -14,6 +14,15 @@ body {
 	user-select: none;
 }
 
+.url{
+  position: absolute;
+  font-size: 0.75em;
+  color: rgba(255, 255, 255, 0.35);
+  padding: 10px;
+  top:0;
+  right: 0;
+}
+
 #causeway-text {
 	white-space: pre;
 	font-size: 1.3em;
@@ -41,8 +50,8 @@ body {
 }
 
 .symbol {
-	-webkit-filter: blur(5px);
-	filter: blur(05px);
+	-webkit-filter: blur(9px);
+	filter: blur(9px);
 	opacity: 0.5;
 	font-size: 1.5em;
 }
@@ -52,8 +61,8 @@ small {
 }
 
 .phrase {
-	-webkit-filter: blur(5px);
-	filter: blur(05px);
+	-webkit-filter: blur(9px);
+	filter: blur(9px);
 	opacity: 0.5;
 	border-bottom: 0.2em solid black;
 	padding: 0.1em;

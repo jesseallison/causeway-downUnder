@@ -11,6 +11,8 @@
 
 <body>
 
+	<div class="url">emdm.io</div>
+
 	<div class="sec sw">
 		<h1>Causeway</h1>
 		<p>Words | <strong>Vincent A. Cellucci</strong></p>
@@ -47,15 +49,12 @@
 		socket.on('itemback', function(data) {
 			console.log("itemback: " + data.phrase);
 			var elements = document.getElementsByClassName(data.phrase);
-			// for(var i = elements.length - 1; i >= 0; --i) {
 			elements[0].className += " clicked";
-			// elements[i].style.color = data.color;
-			// elements[i].style.backgroundColor = data.color;
-			// var elem1 = document.getElementById("elemId");
+
 			var style = window.getComputedStyle(elements[0], null);
 			var filter = style.webkitFilter.substr(5, 1);
-			console.log(filter);
 			var mf = filter - 1;
+			// console.log("filter", filter, mf, style.webkitFilter);
 			elements[0].style.webkitFilter = "blur(" + mf + "px)";
 			elements[0].style.borderColor = data.color;
 			// }
