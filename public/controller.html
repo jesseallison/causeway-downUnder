@@ -79,28 +79,6 @@
 			xhr.send();
 
 			function addEvents() {
-				// <span class="triggerWord" id="triggerWhoBrought">
-				// <span class="triggerWord" id="triggerCollide">
-				// <span class="triggerWord" id="triggerCricket">
-				// <span class="triggerWord" id="triggerSequins">
-				// <span class="triggerWord" id="triggerBreath">
-				// <span class="triggerWord" id="triggerSonnet">
-
-				// <button onclick="socket.emit('triggerBBCollapse')">bridge blessing collapse</button>
-				// <button onclick="socket.emit('triggerSmolder')">still smoldering precipitation</button>
-				// <button onclick="socket.emit('triggerWhoBrought')">Who has brought this one here?</button>
-				// <button onclick="socket.emit('triggerCollide')">two storms collide</button>
-				// <button onclick="socket.emit('triggerCricket')">that cricket never finishes</button>
-				// <button onclick="socket.emit('triggerSequins')">satin sequins</button>
-				// <button onclick="socket.emit('triggerBreath')">breath of the Mississippi</button>
-				// <button onclick="socket.emit('triggerSonnet')">A sonnet of immolation...</button>
-				//
-				// var BBCollapseTrigger = document.getElementById("BBCollapse");
-				// BBCollapseTrigger.style.border = "2px orange solid";
-				// BBCollapseTrigger.addEventListener("click", triggerWord, false);
-				// // }
-				// console.log(BBCollapseTrigger);
-
 				var triggerWords = document.getElementsByClassName("triggerWord");
 				for (var i = 0; i < triggerWords.length; i++) {
 					triggerWords[i].addEventListener("click", triggerWord, false);
