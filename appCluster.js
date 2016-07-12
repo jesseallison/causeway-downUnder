@@ -18,11 +18,11 @@
 
 
 var cluster = require('cluster');
-	var workerNumber = require('os').cpus().length*2;
+var workerNumber = require('os').cpus().length*2;
 var express = require('express');
 var http = require('http');
 var sio = require('socket.io');
-	var io;  // the io
+var io;  // the io
 var redis = require('redis');
 var redisAdapter = require('socket.io-redis');
 
@@ -156,21 +156,20 @@ if(cluster.isMaster) {
 			// .broadcast to send message to all sockets.
 			//socket.broadcast.emit('chat', 'SERVER: A new user has connected: ' + username + " " + socket.id + 'Color: ' + socket.userColor);
 			// socket.emit('bump', socket.username, "::dude::");
-			
+
 			redisClient.get('currentSection', function(err, reply) {
 					currentSection = reply;
 					if(currentSection) {
 						var title = getSection(currentSection);
 						socket.emit('setSection', {sect: currentSection, title: title});
+						// socket.emit("section", num);
 			    }
 			});
-			
 
 			if(username == "a_user") {
 				//console.log("Hello:", socket.username, "currentSection:", currentSection, "id:", socket.id, "userColor:", socket.userColor, "userLocation:", socket.userLocation, "userNote:", socket.userNote);
 			}
 
-			
 			// io.sockets.emit('setSection', {sect: sect, title: title});
 			if(username == "a_user") {
 				// oscClient.send('/causeway/registerUser', socket.id, socket.userColor, socket.userLocation[0],socket.userLocation[1], socket.userNote);
@@ -188,9 +187,6 @@ if(cluster.isMaster) {
 			// ioClients.remove(socket.id);	// FIXME: Remove client if they leave
 			io.sockets.emit('chat', 'SERVER: ' + socket.id + ' has left the building');
 		 });
-
-
-
 
 		 socket.on('sendchat', function(data) {
 			// Transmit to everyone who is connected //
