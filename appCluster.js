@@ -16,12 +16,13 @@
 	//  - socket.io to maintain websocket communication
 	//  - redis for interworker communications/data
 
+
 var cluster = require('cluster');
-var workerNumber = require('os').cpus().length*2;
+	var workerNumber = require('os').cpus().length*2;
 var express = require('express');
 var http = require('http');
 var sio = require('socket.io');
-var io;  // the io
+	var io;  // the io
 var redis = require('redis');
 var redisAdapter = require('socket.io-redis');
 
@@ -124,16 +125,19 @@ if(cluster.isMaster) {
 
 			if(username == "theater"){
 				theaterID = socket.id;
+				redisClient.set("theaterID", theaterID);
 				console.log("Hello Theater: " + theaterID);
 			}
 
 			if(username == "controller"){
 				controllerID = socket.id;
+				redisClient.set("controllerID", controllerID);
 				console.log("Hello Controller: " + controllerID);
 			}
 
 			if(username == "audio_controller"){
 				audioControllerID = socket.id;
+				redisClient.set("audioControllerID", audioControllerID);
 				console.log("Hello Audio Controller: " + audioControllerID);
 			}
 
@@ -161,12 +165,15 @@ if(cluster.isMaster) {
 			// io.sockets.emit('setSection', {sect: sect, title: title});
 			if(username == "a_user") {
 				// oscClient.send('/causeway/registerUser', socket.id, socket.userColor, socket.userLocation[0],socket.userLocation[1], socket.userNote);
-				if(audioControllerID) {
-						io.to(audioControllerID).emit('/causeway/registerUser', {id: socket.id, color: socket.userColor, locationX: socket.userLocation[0], locationY: socket.userLocation[1], note: socket.userNote}, 1);
-					// console.log("Added New User", {id: socket.id, color: socket.userColor, locationX: socket.userLocation[0], locationY: socket.userLocation[1], note: socket.userNote});
-		    }
+				redisClient.get('audioControllerID', function(err, reply) {
+						audioControllerID =reply;
+						if(audioControllerID) {
+								io.to(audioControllerID).emit('/causeway/registerUser', {id: socket.id, color: socket.userColor, locationX: socket.userLocation[0], locationY: socket.userLocation[1], note: socket.userNote}, 1);
+				    }
+				});
 			}
 		});
+
 
 		 socket.on('disconnect', function() {
 			// ioClients.remove(socket.id);	// FIXME: Remove client if they leave
@@ -208,91 +215,129 @@ if(cluster.isMaster) {
 			// TODO: Take out all the socket.broadcast.emits.
 			// socket.broadcast.emit('chat', socket.id + " : " + data, 1);
 
-			if(theaterID) {
-				// io.to(theaterID).emit('itemback', {phrase: data, color: socket.userColor}, 1);
-				io.sockets.emit('itemback', {phrase: data, color: socket.userColor}, 1);
-		   }
-			if(audioControllerID) {
-				io.to(audioControllerID).emit('/causeway/phrase/number', {id: socket.id, item: data}, 1);
-					// console.log("Item", data);
-		  }
+			redisClient.get('theaterID', function(err, reply) {
+				theaterID =reply;
+				if(theaterID) {
+					io.sockets.emit('itemback', {phrase: data, color: socket.userColor}, 1);
+		    }
+			});
+
+			redisClient.get('audioControllerID', function(err, reply) {
+					audioControllerID =reply;
+					if(audioControllerID) {
+						io.to(audioControllerID).emit('/causeway/phrase/number', {id: socket.id, item: data}, 1);
+							// console.log("Item", data);
+			    }
+			});
 		});
 
 		socket.on('nextChord', function(data) {
-			if(audioControllerID) {
-					io.to(audioControllerID).emit('/causeway/nextChord', {id: socket.id}, 1);
-	    }
+			redisClient.get('audioControllerID', function(err, reply) {
+					audioControllerID =reply;
+					if(audioControllerID) {
+						io.to(audioControllerID).emit('/causeway/nextChord', {id: socket.id}, 1);
+			    }
+			});
 			socket.broadcast.emit('triggerNextChord', data);
 		});
 
 		socket.on('triggerCauseway', function(data) {
-			if(audioControllerID) {
-					io.to(audioControllerID).emit('/causeway/triggerCauseway', {id: socket.id}, 1);
-	    }
+			redisClient.get('audioControllerID', function(err, reply) {
+					audioControllerID =reply;
+					if(audioControllerID) {
+						io.to(audioControllerID).emit('/causeway/triggerCauseway', {id: socket.id}, 1);
+			    }
+			});
 		});
 
 		socket.on('triggerPitch', function(data) {
-			if(audioControllerID) {
-	        io.to(audioControllerID).emit('/causeway/triggerPitch', {id: socket.id}, 1);
-	    }
+			redisClient.get('audioControllerID', function(err, reply) {
+				audioControllerID =reply;
+				if(audioControllerID) {
+						io.to(audioControllerID).emit('/causeway/triggerPitch', {id: socket.id}, 1);
+		    }
+			});
 		});
 
 		socket.on('triggerBBCollapse', function(data) {
-			if(audioControllerID) {
-	        io.to(audioControllerID).emit('/causeway/triggerBBCollapse', {id: socket.id}, 1);
-	    }
+			redisClient.get('audioControllerID', function(err, reply) {
+				audioControllerID =reply;
+				if(audioControllerID) {
+					io.to(audioControllerID).emit('/causeway/triggerBBCollapse', {id: socket.id}, 1);
+		    }
+			});
 			socket.broadcast.emit('triggerBBCollapse', data);
 		});
 
 		socket.on('triggerSmolder', function(data) {
-			if(audioControllerID) {
-	        io.to(audioControllerID).emit('/causeway/triggerSmolder', {id: socket.id}, 1);
-	    }
+			redisClient.get('audioControllerID', function(err, reply) {
+				audioControllerID =reply;
+				if(audioControllerID) {
+					io.to(audioControllerID).emit('/causeway/triggerSmolder', {id: socket.id}, 1);
+		    }
+			});
 			socket.broadcast.emit('triggerSmolder', data);
 		});
 
 		socket.on('triggerWhoBrought', function(data) {
-			if(audioControllerID) {
-	        io.to(audioControllerID).emit('/causeway/triggerWhoBrought', {id: socket.id}, 1);
-	    }
+			redisClient.get('audioControllerID', function(err, reply) {
+				audioControllerID =reply;
+				if(audioControllerID) {
+					io.to(audioControllerID).emit('/causeway/triggerWhoBrought', {id: socket.id}, 1);
+		    }
+			});
 			socket.broadcast.emit('triggerWhoBrought', data);
 		});
 
 		socket.on('triggerCollide', function(data) {
-			if(audioControllerID) {
-	        io.to(audioControllerID).emit('/causeway/triggerCollide', {id: socket.id}, 1);
-	    }
+			redisClient.get('audioControllerID', function(err, reply) {
+				audioControllerID =reply;
+				if(audioControllerID) {
+					io.to(audioControllerID).emit('/causeway/triggerCollide', {id: socket.id}, 1);
+		    }
+			});
 			socket.broadcast.emit('triggerCollide', data);
 		});
 
 		socket.on('triggerCricket', function(data) {
-			if(audioControllerID) {
-	        io.to(audioControllerID).emit('/causeway/triggerCricket', {id: socket.id}, 1);
-	    }
+			redisClient.get('audioControllerID', function(err, reply) {
+				audioControllerID =reply;
+				if(audioControllerID) {
+					io.to(audioControllerID).emit('/causeway/triggerCricket', {id: socket.id}, 1);
+		    }
+			});
 			socket.broadcast.emit('triggerCricket', data);
 		});
 
 		socket.on('triggerSequins', function(data) {
-			if(audioControllerID) {
-	        io.to(audioControllerID).emit('/causeway/triggerSequins', {id: socket.id}, 1);
-	    }
+			redisClient.get('audioControllerID', function(err, reply) {
+				audioControllerID =reply;
+				if(audioControllerID) {
+					io.to(audioControllerID).emit('/causeway/triggerSequins', {id: socket.id}, 1);
+		    }
+			});
 			socket.broadcast.emit('triggerSequins', data);
 		});
 
 		socket.on('triggerBreath', function(data) {
-			if(audioControllerID) {
-	        io.to(audioControllerID).emit('/causeway/triggerBreath', {id: socket.id}, 1);
-	    }
+			redisClient.get('audioControllerID', function(err, reply) {
+				audioControllerID =reply;
+				if(audioControllerID) {
+					io.to(audioControllerID).emit('/causeway/triggerBreath', {id: socket.id}, 1);
+		    }
+			});
 			socket.broadcast.emit('triggerBreath', data);
 		});
 
 		socket.on('triggerSonnet', function(data) {
-			if(audioControllerID) {
-	        io.to(audioControllerID).emit('/causeway/triggerSonnet', {id: socket.id}, 1);
-	    }
+			redisClient.get('audioControllerID', function(err, reply) {
+				audioControllerID =reply;
+				if(audioControllerID) {
+        	io.to(audioControllerID).emit('/causeway/triggerSonnet', {id: socket.id}, 1);
+		    }
+			});
 			socket.broadcast.emit('triggerSonnet', data);
 		});
-
 
 		socket.on('section', function(data) {
 			console.log("Section is now: "+ data);
@@ -317,10 +362,14 @@ if(cluster.isMaster) {
 		sendSection = function (sect) {
 			var title = getSection(sect);
 			io.sockets.emit('setSection', {sect: sect, title: title});
-			if(audioControllerID) {
-					io.to(audioControllerID).emit('/causeway/currentSection', {section: sect, title: title}, 1);
-					// console.log("Section sent", sect);
-	    }
+
+			redisClient.get('audioControllerID', function(err, reply) {
+					audioControllerID =reply;
+					if(audioControllerID) {
+							io.to(audioControllerID).emit('/causeway/currentSection', {section: sect, title: title}, 1);
+							// console.log("Section sent", sect);
+			    }
+			});
 		};
 
 			// Section shared from Max to UIs
