@@ -45,12 +45,23 @@
 				<br>
 				<br><em>Thanks for tapping!<br>
 				Please wait while more users connect.<br>
-				Tap the word 'Causeway' above to test your connection.</em></p>
+				Tap the word 'Causeway' above to test your connection.</em>
+			</p>
+
 		</div>
 
 	</div>
 
 	<div id="causeway-text"></div>
+
+	<div class="sec se" style="display: none;">
+		<h1 onclick="causeSound.triggerCauseway();"><span class="mainTitle">Causeway</span></h1>
+		<p>
+			<br>
+			<br><em>Thanks for tapping!<br>
+			Please visit causeway.emdm.io for documentation.</em>
+		</p>
+	</div>
 
 	<script>
 		var socket = io.connect(window.location.origin, {
@@ -280,7 +291,7 @@
 				],
 				"32": [0.0, 2599.705322, 4771.541992, 7571.655273],
 				"33": [0.0, 3282.131592, 4619.886719, 5724.761719, 7555.396973, 9136.893555, 10366.349609, 11666.212891, 12938.979492, 14179.274414, 15636.212891, 17298.957031, 17948.867188, 18815.441406, 20061.134766],
-				"w": [0.0, 747.414978]
+				"w": [0.0, 747.414978], "e": [0.0, 747.414978] 
 			};
 
 			this.sectionStarts = this.sectionStartDict[0];

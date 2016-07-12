@@ -19,7 +19,7 @@
 		<p>Audio | <strong>Jesse Allison</strong></p>
 		<p>Visuals | <strong>Derick Ostrenko</strong></p>
 		<br>
-		<p><em>Tapping is the new snapping. Navigate your mobile device to the URL below to participate:</em></p>
+		<p><em>Tapping is the new snapping. Take your phones off silent, turn up the volume, and navigate to the URL below:</em></p>
 		<h2>http://emdm.io</h2>
 		<p>If you need WiFi use...
 			<br> Network: eduroam
@@ -32,6 +32,10 @@
 
 	<div id="causeway-text"></div>
 
+	<div class="sec se">
+		end
+	</div>
+
 	<script>
 		var socket = io.connect(window.location.origin, {
 			transports: ['websocket']
@@ -43,7 +47,7 @@
 		});
 
 		socket.on('chat', function(data) {
-			console.log(data);
+			console.log("chat:", data);
 		});
 
 		socket.on('itemback', function(data) {
@@ -64,7 +68,6 @@
 			console.log("the section is now: " + data.sect + ":" + data.title);
 
 			if (data.title == "Welcome") {
-				console.log('yep');
 				scrollto(data.sect);
 			}
 

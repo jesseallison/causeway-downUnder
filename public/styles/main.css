@@ -24,7 +24,7 @@ body {
 	display: none;
 }
 
-.sw {
+.sw, .se{
   display: block;
 	text-align: center;
 }
