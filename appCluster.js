@@ -4,25 +4,24 @@
 //				Jesse Allison (2016)
 //
 //	To Launch:
-//		NODE_ENV=production sudo node appCluster.js 
+//		NODE_ENV=production sudo node appCluster.js
 //		(sudo is required to launch on port 80.)
-// 
+//
 // To start server with Xtra RAM - NODE_DEBUG=cluster node --max_old_space_size=4096 appCluster.js
 
 // ************************************************
 
-	// Setup web app 
+	// Setup web app
 	//  - using express to serve pages
 	//  - socket.io to maintain websocket communication
 	//  - redis for interworker communications/data
 
-
 var cluster = require('cluster');
-	var workerNumber = require('os').cpus().length*2;
+var workerNumber = require('os').cpus().length*2;
 var express = require('express');
 var http = require('http');
 var sio = require('socket.io');
-	var io;  // the io
+var io;  // the io
 var redis = require('redis');
 var redisAdapter = require('socket.io-redis');
 
@@ -68,10 +67,10 @@ if(cluster.isMaster) {
 } else {
 				// Kickoff a Worker!
 	start();
-		
+
 	var redisClient = redis.createClient();
 		// redisClient.lpush("markov", markovJoined);
-		// 
+		//
 		// redisClient.lindex("markov", 0, function (err, data) {
 		// 	// io.sockets.emit('chat', data);
 		// 	// console.log(data);
@@ -82,19 +81,19 @@ if(cluster.isMaster) {
 		// for (var i=0; i < redisClient.LLEN("markovArray");i++) {
 		// 	markovArray[i] = JSON.parse redisClient.LGET("markovArray", i);
 		// }
-		
+
 		//	client.sscan(
     //	    "itemsset",
     //	    cursor,
     //	    'MATCH', '*'+idata+'*',
     //	    'COUNT', '10',
     //	    function(err, res) {
-    //	
+    //
 		//				redisClient.on("error", function (err) {
 		//				    console.log("Redis Error " + err);
 		//				});
 		//			...}
-					
+
 
 
 
@@ -105,7 +104,7 @@ if(cluster.isMaster) {
 	var ioClients = [];		// list of clients who have logged in.
 	var currentSection = 0;		// current section.
 			// Specific clients who we only want one of.
-	var theaterID,			
+	var theaterID,
 			conrollerID,
 			audioControllerID;
 
@@ -132,7 +131,7 @@ if(cluster.isMaster) {
 				controllerID = socket.id;
 				console.log("Hello Controller: " + controllerID);
 			}
-		
+
 			if(username == "audio_controller"){
 				audioControllerID = socket.id;
 				console.log("Hello Audio Controller: " + audioControllerID);
@@ -153,7 +152,7 @@ if(cluster.isMaster) {
 			//socket.broadcast.emit('chat', 'SERVER: A new user has connected: ' + username + " " + socket.id + 'Color: ' + socket.userColor);
 			// socket.emit('bump', socket.username, "::dude::");
 			var title = getSection(currentSection);
-		
+
 			if(username == "a_user") {
 				//console.log("Hello:", socket.username, "currentSection:", currentSection, "id:", socket.id, "userColor:", socket.userColor, "userLocation:", socket.userLocation, "userNote:", socket.userNote);
 			}
@@ -173,9 +172,9 @@ if(cluster.isMaster) {
 			// ioClients.remove(socket.id);	// FIXME: Remove client if they leave
 			io.sockets.emit('chat', 'SERVER: ' + socket.id + ' has left the building');
 		 });
-		
-		
-		
+
+
+
 
 		 socket.on('sendchat', function(data) {
 			// Transmit to everyone who is connected //
@@ -187,7 +186,7 @@ if(cluster.isMaster) {
 			// oscClient.send('/tapped', 1);
 			socket.broadcast.emit('tapped', socket.username, 1);
 		});
-		
+
 		socket.on('interactionTrail', function(data) {
 			console.log("Received interactionTrail: "+ data);
 			// send somewhere?  perhaps theatre?
@@ -218,7 +217,7 @@ if(cluster.isMaster) {
 					// console.log("Item", data);
 		  }
 		});
-		
+
 		socket.on('nextChord', function(data) {
 			if(audioControllerID) {
 					io.to(audioControllerID).emit('/causeway/nextChord', {id: socket.id}, 1);
@@ -237,63 +236,63 @@ if(cluster.isMaster) {
 	        io.to(audioControllerID).emit('/causeway/triggerPitch', {id: socket.id}, 1);
 	    }
 		});
-		
+
 		socket.on('triggerBBCollapse', function(data) {
 			if(audioControllerID) {
 	        io.to(audioControllerID).emit('/causeway/triggerBBCollapse', {id: socket.id}, 1);
 	    }
 			socket.broadcast.emit('triggerBBCollapse', data);
 		});
-		
+
 		socket.on('triggerSmolder', function(data) {
 			if(audioControllerID) {
 	        io.to(audioControllerID).emit('/causeway/triggerSmolder', {id: socket.id}, 1);
 	    }
 			socket.broadcast.emit('triggerSmolder', data);
 		});
-		
+
 		socket.on('triggerWhoBrought', function(data) {
 			if(audioControllerID) {
 	        io.to(audioControllerID).emit('/causeway/triggerWhoBrought', {id: socket.id}, 1);
 	    }
 			socket.broadcast.emit('triggerWhoBrought', data);
 		});
-		
+
 		socket.on('triggerCollide', function(data) {
 			if(audioControllerID) {
 	        io.to(audioControllerID).emit('/causeway/triggerCollide', {id: socket.id}, 1);
 	    }
 			socket.broadcast.emit('triggerCollide', data);
 		});
-		
+
 		socket.on('triggerCricket', function(data) {
 			if(audioControllerID) {
 	        io.to(audioControllerID).emit('/causeway/triggerCricket', {id: socket.id}, 1);
 	    }
 			socket.broadcast.emit('triggerCricket', data);
 		});
-		
+
 		socket.on('triggerSequins', function(data) {
 			if(audioControllerID) {
 	        io.to(audioControllerID).emit('/causeway/triggerSequins', {id: socket.id}, 1);
 	    }
 			socket.broadcast.emit('triggerSequins', data);
 		});
-		
+
 		socket.on('triggerBreath', function(data) {
 			if(audioControllerID) {
 	        io.to(audioControllerID).emit('/causeway/triggerBreath', {id: socket.id}, 1);
 	    }
 			socket.broadcast.emit('triggerBreath', data);
 		});
-		
+
 		socket.on('triggerSonnet', function(data) {
 			if(audioControllerID) {
 	        io.to(audioControllerID).emit('/causeway/triggerSonnet', {id: socket.id}, 1);
 	    }
 			socket.broadcast.emit('triggerSonnet', data);
 		});
-		
+
 
 		socket.on('section', function(data) {
 			console.log("Section is now: "+ data);
@@ -305,12 +304,12 @@ if(cluster.isMaster) {
 				// Functions for handling stuff
 
 				// **** SECTIONS ****
-		var sectionTitles = ["Welcome", "Preface", "Section 1", "Section 2", "Section 3", 
-			"Section 4", "Section 5", "Section 6", "Section 7", "Section 8", "Section 9", 
-			"Section 10", "Section 11", "Section 12", "Section 13", "Section 14", "Section 15",  
-			"Section 16", "Section 17", "Section 18", "Section 19", "Section 20", "Section 21", 
-			"Section 22", "Section 23", "Section 24", "Section 25", "Section 26", "Section 27", 
-			"Section 28", "Section 29", "Section 30", "Section 31", "Section 32", "Section 33", 
+		var sectionTitles = ["Welcome", "Preface", "Section 1", "Section 2", "Section 3",
+			"Section 4", "Section 5", "Section 6", "Section 7", "Section 8", "Section 9",
+			"Section 10", "Section 11", "Section 12", "Section 13", "Section 14", "Section 15",
+			"Section 16", "Section 17", "Section 18", "Section 19", "Section 20", "Section 21",
+			"Section 22", "Section 23", "Section 24", "Section 25", "Section 26", "Section 27",
+			"Section 28", "Section 29", "Section 30", "Section 31", "Section 32", "Section 33",
 			"End"];
 
 		// Todo: Add sections to correspond to organ interactions
@@ -332,20 +331,20 @@ if(cluster.isMaster) {
 
 		getSection = function(sect) {
 			var title = "none";
-		
+
 			if(sect == 'w'){
 				title = sectionTitles[0];
-			} 
+			}
 
 			if(sect == 'e'){
 				title = sectionTitles[35];
-			} 
+			}
 
 			if(sect !== 'e' && sect !== 'w') {
 				sect++;
 				title = sectionTitles[sect];
-			} 
-		
+			}
+
 			return title;
 		};
 
@@ -379,6 +378,6 @@ if(cluster.isMaster) {
 		}
 		return color;
 	}
-	
-	
+
+
 }

@@ -6,6 +6,12 @@ body {
 	font-size: 1.1em;
 	background-color: black;
 	color: white;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 #causeway-text {
@@ -106,7 +112,7 @@ small {
 	animation-fill-mode: forwards;
 }
 
-video#bgvid { 
+video#bgvid {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -117,6 +123,6 @@ video#bgvid {
     z-index: -100;
     -webkit-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
-    background-size: cover; 
+    background-size: cover;
     -webkit-filter: blur(50px);
 }

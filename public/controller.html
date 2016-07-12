@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Causeway | Controller</title>
 	<script src="/socket.io/socket.io.js"></script>
 	<link rel="stylesheet" href="styles/controller.css">
-	<link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
+	<link href="http://fonts.googleapis.com/css?family=Vollkorn" rel="stylesheet" type="text/css">
 
 </head>
+
 <body>
 
 	<div class="sec sw">
@@ -16,15 +18,19 @@
 		<p>Audio | <strong>Jesse Allison</strong></p>
 		<p>Visuals | <strong>Derick Ostrenko</strong></p>
 		<p><em>Instructions: Tapping is the new snapping.</em></p>
-		<p class ="url">Visit http://emdm.io on your mobile device to participate.</p>
+		<p class="url">Visit http://emdm.io on your mobile device to participate.</p>
 	</div>
 
-<div id="causeway-text"></div>
+	<div id="causeway-text"></div>
 
 	<script type="text/javascript">
-		var socket = io.connect(window.location.origin , {transports:['websocket']} );
- 		socket.emit('addme', {name: "controller"});
-		
+		var socket = io.connect(window.location.origin, {
+			transports: ['websocket']
+		});
+		socket.emit('addme', {
+			name: "controller"
+		});
+
 		socket.on('chat', function(data) {
 			console.log(data);
 		});
@@ -33,10 +39,10 @@
 			console.log("The section is now: " + data.title);
 		});
 
-		function scrollto(element){ 
+		function scrollto(element) {
 			var ele = document.getElementsByClassName(element)[0];
 			if (!!ele) {
-				window.scrollTo(ele.offsetLeft,ele.offsetTop);
+				window.scrollTo(ele.offsetLeft, ele.offsetTop);
 			}
 		}
 
@@ -49,28 +55,49 @@
 			socket.emit("section", num);
 		}
 
+		function triggerWord() {
+			console.log(String(this.id));
+			if (String(this.id) == "BBCollapse") {
+				console.log("hihi");
+
+				socket.emit('triggerBBCollapse');
+			}
+			if(document.getElementById("BBCollapse").style.color == "blue"){
+				document.getElementById("BBCollapse").style.color = "red";
+			} else {
+				document.getElementById("BBCollapse").style.color = "blue";
+			}
+		}
+
 		window.onload = function() {
 
-			var xhr= new XMLHttpRequest();
+			var xhr = new XMLHttpRequest();
 			xhr.open('GET', 'data/causeway.html', true);
-			xhr.onreadystatechange= function() {
-			    if (this.readyState!==4) return;
-			    if (this.status!==200) return; // or whatever error handling you want
-			    document.getElementById("causeway-text").innerHTML= this.responseText;
-			    addEvents();
+			xhr.onreadystatechange = function() {
+				if (this.readyState !== 4) return;
+				if (this.status !== 200) return; // or whatever error handling you want
+				document.getElementById("causeway-text").innerHTML = this.responseText;
+				addEvents();
 			};
 			xhr.send();
 
 			function addEvents() {
-				var phrases = document.getElementsByClassName('sec');
+				var BBCollapseTrigger = document.getElementById("BBCollapse");
+				BBCollapseTrigger.style.border = "2px orange solid";
+				BBCollapseTrigger.addEventListener("click", triggerWord, false);
+				// }
+				console.log(BBCollapseTrigger);
+
+				var phrases = document.getElementsByClassName("sec");
 				for (var i = 0; i < phrases.length; i++) {
 					phrases[i].addEventListener("click", clickgo, false);
 				}
 			}
 
 		};
-
 	</script>
-	
+	<p id="BBCollapse" class="BBCollapse">test
+	</p>
 </body>
+
 </html>
