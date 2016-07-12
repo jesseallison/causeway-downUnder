@@ -56,17 +56,14 @@
 		}
 
 		function triggerWord() {
-			console.log(String(this.id));
-			if (String(this.id) == "BBCollapse") {
-				console.log("hihi");
+			socket.emit(this.id);
 
-				socket.emit('triggerBBCollapse');
-			}
-			if(document.getElementById("BBCollapse").style.color == "blue"){
-				document.getElementById("BBCollapse").style.color = "red";
+			if(document.getElementById(String(this.id)).style.color == "blue") {
+				document.getElementById(String(this.id)).style.color = "red";
 			} else {
-				document.getElementById("BBCollapse").style.color = "blue";
+				document.getElementById(String(this.id)).style.color = "blue";
 			}
+
 		}
 
 		window.onload = function() {
@@ -82,11 +79,27 @@
 			xhr.send();
 
 			function addEvents() {
-				var BBCollapseTrigger = document.getElementById("BBCollapse");
-				BBCollapseTrigger.style.border = "2px orange solid";
-				BBCollapseTrigger.addEventListener("click", triggerWord, false);
-				// }
-				console.log(BBCollapseTrigger);
+
+				// <button onclick="socket.emit('triggerBBCollapse')">bridge blessing collapse</button>
+				// <button onclick="socket.emit('triggerSmolder')">still smoldering precipitation</button>
+				// <button onclick="socket.emit('triggerWhoBrought')">Who has brought this one here?</button>
+				// <button onclick="socket.emit('triggerCollide')">two storms collide</button>
+				// <button onclick="socket.emit('triggerCricket')">that cricket never finishes</button>
+				// <button onclick="socket.emit('triggerSequins')">satin sequins</button>
+				// <button onclick="socket.emit('triggerBreath')">breath of the Mississippi</button>
+				// <button onclick="socket.emit('triggerSonnet')">A sonnet of immolation...</button>
+				//
+				// var BBCollapseTrigger = document.getElementById("BBCollapse");
+				// BBCollapseTrigger.style.border = "2px orange solid";
+				// BBCollapseTrigger.addEventListener("click", triggerWord, false);
+				// // }
+				// console.log(BBCollapseTrigger);
+
+				var triggerWords = document.getElementsByClassName("triggerWord");
+				for (var i = 0; i < triggerWords.length; i++) {
+					triggerWords[i].addEventListener("click", triggerWord, false);
+					triggerWords[i].style.border = "2px orange solid";
+				}
 
 				var phrases = document.getElementsByClassName("sec");
 				for (var i = 0; i < phrases.length; i++) {
