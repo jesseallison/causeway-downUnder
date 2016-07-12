@@ -104,6 +104,7 @@ if(cluster.isMaster) {
 
 	var ioClients = [];		// list of clients who have logged in.
 	var currentSection = 0;		// current section.
+		redisClient.set("currentSection", currentSection);
 			// Specific clients who we only want one of.
 	var theaterID,
 			conrollerID,
@@ -155,13 +156,21 @@ if(cluster.isMaster) {
 			// .broadcast to send message to all sockets.
 			//socket.broadcast.emit('chat', 'SERVER: A new user has connected: ' + username + " " + socket.id + 'Color: ' + socket.userColor);
 			// socket.emit('bump', socket.username, "::dude::");
-			var title = getSection(currentSection);
+			
+			redisClient.get('currentSection', function(err, reply) {
+					currentSection = reply;
+					if(currentSection) {
+						var title = getSection(currentSection);
+						socket.emit('setSection', {sect: currentSection, title: title});
+			    }
+			});
+			
 
 			if(username == "a_user") {
 				//console.log("Hello:", socket.username, "currentSection:", currentSection, "id:", socket.id, "userColor:", socket.userColor, "userLocation:", socket.userLocation, "userNote:", socket.userNote);
 			}
 
-			socket.emit('setSection', {sect: currentSection, title: title});
+			
 			// io.sockets.emit('setSection', {sect: sect, title: title});
 			if(username == "a_user") {
 				// oscClient.send('/causeway/registerUser', socket.id, socket.userColor, socket.userLocation[0],socket.userLocation[1], socket.userNote);
@@ -342,6 +351,7 @@ if(cluster.isMaster) {
 		socket.on('section', function(data) {
 			console.log("Section is now: "+ data);
 			currentSection = data;
+			redisClient.set("currentSection", currentSection);
 			sendSection(currentSection);
 		})
 

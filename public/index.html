@@ -85,7 +85,6 @@
 
 		function registerWithServer() {
 			// Tone.startMobile();		// May need this back - check on devices.
-			causeSound.triggerPitch();
 			// causeSound.triggerCauseway();
 			socket.emit('addme', {
 				name: "a_user",
@@ -93,6 +92,7 @@
 				note: causeSound.pitch,
 				location: myLocation
 			});
+			causeSound.triggerPitch();
 			document.getElementsByClassName("sd")[0].style.display = 'none';
 			document.getElementsByClassName("st")[0].style.display = 'block';
 		}
