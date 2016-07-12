@@ -41,7 +41,7 @@
 	
 	socket.on('setSection', function(data) {
 		console.log("The section is now: " + data.title);
-		window.max.outlet('section'+ data.title);
+		window.max.outlet('section'+" "+ data.title);
 	});
 	
 	socket.on('triggerBeginning', function(data) {
@@ -57,19 +57,19 @@
 	});
 	
 	socket.on('/causeway/currentSection', function(data) {
-		window.max.outlet('/causeway/currentSection'+ data.section+ data.title);
+		window.max.outlet('/causeway/currentSection'+" "+ data.section+" "+ data.title);
 	});
 	
 	socket.on('/causeway/triggerPitch', function(data) {
-		window.max.outlet('/causeway/triggerPitch'+ data.id);
+		window.max.outlet('/causeway/triggerPitch'+" "+ data.id);
 	});
 	
 	socket.on('/causeway/triggerCauseway', function(data) {
-		window.max.outlet('/causeway/triggerCauseway'+ data.id);
+		window.max.outlet('/causeway/triggerCauseway'+" "+ data.id);
 	});
 	
 	socket.on('/causeway/phrase/number', function(data) {
-		window.max.outlet('/causeway/phrase/number'+ data.id+ data.item);
+		window.max.outlet('/causeway/phrase/number'+" "+ data.id+" "+ data.item);
 	});
 	
 	socket.on('/causeway/registerUser', function(data) {
@@ -77,35 +77,35 @@
 	});
 	
 	socket.on('/causeway/triggerBBCollapse', function(data) {
-		window.max.outlet('/causeway/triggerBBCollapse'+ data.id);
+		window.max.outlet('/causeway/triggerBBCollapse'+" "+ data.id);
 	});
 	
 	socket.on('/causeway/triggerSmolder', function(data) {
-		window.max.outlet('/causeway/triggerSmolder'+ data.id);
+		window.max.outlet('/causeway/triggerSmolder'+" "+ data.id);
 	});
 	
 	socket.on('/causeway/triggerWhoBrought', function(data) {
-		window.max.outlet('/causeway/triggerWhoBrought'+ data.id);
+		window.max.outlet('/causeway/triggerWhoBrought'+" "+ data.id);
 	});
 	
 	socket.on('/causeway/triggerCollide', function(data) {
-		window.max.outlet('/causeway/triggerCollide'+ data.id);
+		window.max.outlet('/causeway/triggerCollide'+" "+ data.id);
 	});
 	
 	socket.on('/causeway/triggerCricket', function(data) {
-		window.max.outlet('/causeway/triggerCricket'+ data.id);
+		window.max.outlet('/causeway/triggerCricket'+" "+ data.id);
 	});
 	
 	socket.on('/causeway/triggerSequins', function(data) {
-		window.max.outlet('/causeway/triggerSequins'+ data.id);
+		window.max.outlet('/causeway/triggerSequins'+" "+ data.id);
 	});
 	
 	socket.on('/causeway/triggerBreath', function(data) {
-		window.max.outlet('/causeway/triggerBreath'+ data.id);
+		window.max.outlet('/causeway/triggerBreath'+" "+ data.id);
 	});
 	
 	socket.on('/causeway/triggerSonnet', function(data) {
-		window.max.outlet('/causeway/triggerSonnet'+ data.id);
+		window.max.outlet('/causeway/triggerSonnet'+" "+ data.id);
 	});
 	
 
