@@ -59,7 +59,7 @@
 		<p>
 			<br>
 			<br><em>Thanks for tapping!<br>
-			Please visit causeway.emdm.io for documentation.</em>
+			Please visit <a href="http://causeway.emdm.io">causeway.emdm.io</a> for documentation.</em>
 		</p>
 	</div>
 
@@ -293,7 +293,7 @@
 				],
 				"32": [0.0, 2599.705322, 4771.541992, 7571.655273],
 				"33": [0.0, 3282.131592, 4619.886719, 5724.761719, 7555.396973, 9136.893555, 10366.349609, 11666.212891, 12938.979492, 14179.274414, 15636.212891, 17298.957031, 17948.867188, 18815.441406, 20061.134766],
-				"w": [0.0, 747.414978], "e": [0.0, 747.414978] 
+				"w": [0.0, 747.414978], "e": [0.0, 747.414978]
 			};
 
 			this.sectionStarts = this.sectionStartDict[0];
@@ -319,7 +319,7 @@
 					"release": 2.0
 				}
 			}).connect(this.tremolo);
-			
+
 			this.synth.volume.value = -10;
 
  // 		this.plucky = new Tone.PluckSynth().toMaster();
@@ -357,22 +357,22 @@
 
 			this.pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
 			console.log("Pitch & Length: ", this.pitch, this.pitchCollection.length);
-			
+
 			this.chords = [[55, 59, 62, 66, 68, 71, 75, 78, 82],
 											[57, 61, 64, 67, 69, 73, 76, 80, 83],
 											[55, 57, 61, 62, 66, 67],
 											[57, 59, 62, 64, 67, 68],
 											[83, 82, 78, 76, 73, 71],
 											[82, 80, 76, 75, 71, 69]];
-						
+
 			this.currentChord = 0;
-			
+
 			this.freq = function(midi) {
 				var note = Tone.Frequency(midi).midiToFrequency(midi);
 				// console.log("Midi: ", midi, note)
 				return note;
 			}
-						
+
 					// **** Playing Notes **** //
 			this.playPitch = function() {
 				console.log("Pitch: ", this.pitch);
@@ -397,12 +397,12 @@
 			this.playBrought = function() {
 				this.playerWhoBrought.start();
 			};
-			
+
 					// **** Chords **** //
 			this.setCurrentChord = function (chord) {
 				this.currentChord = chord;
 			}
-			
+
 //			this.arpeggio = function() {
 //				var pattern = causeSound.chords[causeSound.currentChord];
 //				var pat = new Tone.Pattern(function(time, note){
@@ -410,14 +410,14 @@
 //					var freq = Tone.Frequency(note).midiToFrequency();
 //					causeSound.plucky.triggerAttackRelease(freq, '8n');
 //				}, pattern, "randomOnce");
-//				
+//
 //				pat.interval = "8n";
 //				pat.iterations = 4;
 //				pat.start();
 //			}
-			
-			
-			
+
+
+
 			this.triggerCauseway = function() {
 				this.playPitch();
 				this.playerCauseway.start();
@@ -428,7 +428,7 @@
 				// elements[0].className += " clicked";
 				elements[0].style.backgroundColor = myColor;
 			};
-			
+
 
 			this.loadSection = function(section) {
 				//this.playerSection = new Tone.Player("data/Causeway_Sections/causeway_section_audio_"+section+".mp3").toMaster();
