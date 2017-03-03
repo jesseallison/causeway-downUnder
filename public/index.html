@@ -375,9 +375,7 @@
 
 					// **** Playing Notes **** //
 			this.playPitch = function() {
-				console.log("Pitch: ", this.pitch);
 				this.synth.triggerAttackRelease(this.freq(this.pitch), 5);
-				console.log("Pitch: ", this.pitch);
 			};
 
 			this.playRandomPitch = function() {

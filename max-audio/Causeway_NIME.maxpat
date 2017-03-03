@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 131.0, 79.0, 1302.0, 916.0 ],
+		"rect" : [ 82.0, 79.0, 1442.0, 937.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -56,7 +56,6 @@
 					"numinlets" : 8,
 					"numoutlets" : 0,
 					"patching_rect" : [ 210.0, 862.0, 117.0, 22.0 ],
-					"presentation_rect" : [ 209.0, 860.0, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "dac~ 3 4 3 4 3 4 3 4"
 				}
@@ -254,7 +253,6 @@
 					"numoutlets" : 4,
 					"outlettype" : [ "", "", "", "" ],
 					"patching_rect" : [ 2275.0, 104.0, 81.0, 22.0 ],
-					"presentation_rect" : [ 2275.0, 104.0, 0.0, 0.0 ],
 					"saved_object_attributes" : 					{
 						"embed" : 0
 					}
@@ -297,7 +295,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 2101.0, 314.25, 60.0, 22.0 ],
-					"presentation_rect" : [ 2176.0, 329.0, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "s triggers"
 				}
@@ -311,7 +308,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 2125.0, 278.0, 289.0, 22.0 ],
-					"presentation_rect" : [ 675.0, 175.5, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "/causeway/triggerPitch /#YWANR4FGr3aKtcj2AAAC"
 				}
@@ -421,7 +417,6 @@
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
 					"patching_rect" : [ 1981.5, 296.0, 50.0, 22.0 ],
-					"presentation_rect" : [ 1981.0, 297.0, 0.0, 0.0 ],
 					"style" : ""
 				}
 
@@ -434,7 +429,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 1954.5, 304.0, 24.0, 24.0 ],
-					"presentation_rect" : [ 1954.0, 305.0, 0.0, 0.0 ],
 					"style" : ""
 				}
 
@@ -450,7 +444,6 @@
 					"outlettype" : [ "float", "", "", "bang" ],
 					"parameter_enable" : 0,
 					"patching_rect" : [ 1961.0, 354.0, 200.0, 56.0 ],
-					"presentation_rect" : [ 1960.5, 355.0, 0.0, 0.0 ],
 					"style" : ""
 				}
 
@@ -463,7 +456,6 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "bang" ],
 					"patching_rect" : [ 1973.5, 433.0, 36.0, 22.0 ],
-					"presentation_rect" : [ 1973.0, 434.0, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "line~"
 				}
@@ -477,7 +469,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1981.5, 324.0, 82.0, 22.0 ],
-					"presentation_rect" : [ 1981.0, 325.0, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "setdomain $1"
 				}
@@ -616,15 +607,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-99",
-					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 653.0, 373.25, 286.0, 35.0 ],
-					"presentation_rect" : [ 651.0, 375.0, 0.0, 0.0 ],
+					"patching_rect" : [ 653.0, 373.25, 286.0, 22.0 ],
 					"style" : "",
-					"text" : "/#gRiu2pA7IBtnKPwUAAA5 #5CBA33 0.233333 0.613002 68"
+					"text" : "/#rJv3bu9EIn6u6uXPAAAO #B3142A 0.5 0.5 76"
 				}
 
 			}
@@ -636,7 +625,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 451.0, 183.0, 103.0, 22.0 ],
-					"presentation_rect" : [ 454.0, 184.0, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "/registerUser bob"
 				}
@@ -676,9 +664,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 683.0, 195.5, 286.0, 22.0 ],
-					"presentation_rect" : [ 280.5, 415.5, 0.0, 0.0 ],
 					"style" : "",
-					"text" : "/triggerPitch /#gRiu2pA7IBtnKPwUAAA5"
+					"text" : "/phrase/number /#rJv3bu9EIn6u6uXPAAAO 55"
 				}
 
 			}
@@ -1672,7 +1659,7 @@
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 146.0, 171.0, 70.0, 22.0 ],
 									"style" : "",
-									"text" : "515 528"
+									"text" : "41 57"
 								}
 
 							}
@@ -1985,13 +1972,14 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-293",
+					"linecount" : 3,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 877.75, 281.25, 51.5, 22.0 ],
+					"patching_rect" : [ 877.75, 281.25, 51.5, 49.0 ],
 					"style" : "",
-					"text" : "e End"
+					"text" : "2 Section 2"
 				}
 
 			}
@@ -2123,7 +2111,7 @@
 										"parameter_enable" : 0,
 										"range" : 128,
 										"showeditor" : 0,
-										"size" : 18
+										"size" : 6
 									}
 ,
 									"showeditor" : 0,
@@ -5764,9 +5752,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1670.0, 134.0, 221.0, 22.0 ],
+					"patching_rect" : [ 1670.0, 134.0, 235.0, 22.0 ],
 					"style" : "",
-					"text" : "read http://localhost:80/audioPatch.html"
+					"text" : "read http://localhost:8001/audioPatch.html"
 				}
 
 			}
@@ -5860,7 +5848,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 940.0, 761.0, 356.0, 22.0 ],
 					"style" : "",
-					"text" : "\"/causeway/triggerCauseway /#pcSLRiclJifKImVTAAAv\""
+					"text" : "\"/causeway/phrase/number /#rJv3bu9EIn6u6uXPAAAO 55\""
 				}
 
 			}
@@ -5877,7 +5865,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 1005.0, 421.5, 332.0, 290.0 ],
 					"rendermode" : 1,
-					"url" : "http://emdm.io/audioPatch.html"
+					"url" : "http://localhost:8001/audioPatch.html"
 				}
 
 			}
@@ -6134,13 +6122,14 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-82",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 580.5, 142.5, 286.0, 22.0 ],
+					"patching_rect" : [ 580.5, 142.5, 286.0, 35.0 ],
 					"style" : "",
-					"text" : "/causeway/triggerPitch /#gRiu2pA7IBtnKPwUAAA5"
+					"text" : "/causeway/phrase/number /#rJv3bu9EIn6u6uXPAAAO 55"
 				}
 
 			}
@@ -7007,7 +6996,6 @@
 									"outlettype" : [ "", "bang" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 453.0, 714.0, 50.0, 22.0 ],
-									"presentation_rect" : [ 453.5, 711.0, 0.0, 0.0 ],
 									"style" : ""
 								}
 
@@ -7084,7 +7072,6 @@
 									"outlettype" : [ "int" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 609.0, 274.0, 24.0, 24.0 ],
-									"presentation_rect" : [ 609.0, 243.0, 0.0, 0.0 ],
 									"style" : ""
 								}
 
@@ -18418,12 +18405,6 @@
 				"name" : "thru.maxpat",
 				"bootpath" : "C74:/patchers/m4l/Pluggo for Live resources/patches",
 				"type" : "JSON",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "Causeway_Nime_UserData",
-				"bootpath" : "~/Documents/_Art_Projects/causeway-downUnder/max-audio",
-				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
